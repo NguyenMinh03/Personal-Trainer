@@ -16,11 +16,6 @@ function Customerlist() {
     const [search, setSearch] = useState("");
     const [pageSize] = useState(20);
     const [addTrainingOpen, setAddTrainingOpen] = useState(false);
-const [selectedCustomer, setSelectedCustomer] = useState(null);
-const openAddTrainingModal = (customerData) => {
-    setSelectedCustomer(customerData);
-    setAddTrainingOpen(true);
-  };
     const colDefs = [
         
         {
@@ -38,7 +33,6 @@ const openAddTrainingModal = (customerData) => {
                         size="small">
                         <DeleteIcon />
                     </IconButton>
-                    <AddTraining addTraining={AddTraining} customerData={selectedCustomer} />
 
                 </div>
             ),

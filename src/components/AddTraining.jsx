@@ -69,7 +69,7 @@ export default function AddTraining({ addTraining, customerData }) {
             value={training.customerName}
             onChange={e => setTraining({ ...training, customerName: e.target.value })}
             fullWidth
-            disabled // This field is pre-filled and not intended to be edited
+            disabled 
           />
         </DialogContent>
         <DialogActions>

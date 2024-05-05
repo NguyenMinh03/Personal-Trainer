@@ -21,7 +21,6 @@ export default function EditCustomer({ data, updateCustomer }) {
 
     const handleClickOpen = () => {
         setOpen(true);
-        // Pre-fill the customer state with the data passed to the component
         setCustomer({
             firstname: data.firstname || '',
             lastname: data.lastname || '',
@@ -54,7 +53,6 @@ export default function EditCustomer({ data, updateCustomer }) {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Update Customer</DialogTitle>
                 <DialogContent>
-                    {/* Text fields to edit customer info */}
                     <TextField
                     margin="dense"
                     label="First Name"
@@ -111,7 +109,6 @@ export default function EditCustomer({ data, updateCustomer }) {
                     fullWidth
                     variant="standard"
                   />
-                    {/* Add other fields similar to the above */}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
