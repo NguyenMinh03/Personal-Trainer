@@ -1,10 +1,14 @@
-export const getTraining = () => {
+export const getTraining = async () => {
     const apiUrl = "https://customerrestservice-personaltraining.rahtiapp.fi/api/trainings";
-    return fetch(apiUrl)
-    .then(response => {
-        if (!response.ok)
-            throw new Error("Error in fetch: " + response.statusText);
-
-        return response.json();
-    })
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            const errorDetails = await response.text();
+            throw new Error(`Error in fetch: ${response.statusText}, Details: ${errorDetails}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Network error:", error);
+        throw error; // Rethrow after logging or handle accordingly
+    }
 }
