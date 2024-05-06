@@ -40,11 +40,15 @@ function Customerlist() {
                 </div>
             ),
             width: 150,
+            suppressMenu: true,
+        suppressColumnsToolPanel: true
     
         },
         {
             headerName: "Add Training",
             width: 200,
+            suppressMenu: true,
+        suppressColumnsToolPanel: true,
             cellRenderer: (params) => (
               <div>
                 <AddTraining customerId={params.data.id} firstName={params.data.firstname} lastName={params.data.lastname} /> 
@@ -59,7 +63,13 @@ function Customerlist() {
         { headerName: 'Postcode', field: 'postcode', sortable: true, filter: true },
         { headerName: 'City', field: 'city', sortable: true, filter: true },
     ];
-   
+    const onExportClick = useCallback(() => {
+        gridApi.exportDataAsCsv({
+            columnKeys: ['firstname', 'lastname', 'email', 'phone', 'streetaddress', 'postcode', 'city'], // Specify fields to export
+            fileName: 'customers.csv'
+        });
+    }, [gridApi]);
+    
     const fetchCustomers = useCallback(() => {
         getCustomers()
             .then(data => {
@@ -178,7 +188,13 @@ useEffect(() => {
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                 />
+                 <div>
+                <Button onClick={onExportClick} variant="contained" color="primary" sx={{ marginRight: 2 }}>
+                    Export CSV
+                </Button>
                 <AddCustomer addCustomer={addCustomer} />
+            </div>
+                
             </Box>
             <div className="ag-theme-material" style={{ width: '100%', height: '70vh' }}>
                 <AgGridReact
@@ -188,7 +204,7 @@ useEffect(() => {
                     columnDefs={colDefs}
                     pagination={true}
                     paginationPageSize={pageSize}
-                    onGridReady={onGridReady}
+                    onGridReady={params => setGridApi(params.api)}
                 />
             </div>
         </Paper>
