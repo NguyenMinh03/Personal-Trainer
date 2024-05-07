@@ -32,7 +32,7 @@ export default function TrainingCalendar() {
     const events = trainings.map(training => {
         if (!training.customer) {
             console.error('Customer details are missing in training data');
-            return null; // skipping this entry
+            return null;
         }
         return {
             title: `${training.activity} / ${training.customer.firstname} ${training.customer.lastname}`,

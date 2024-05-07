@@ -11,6 +11,9 @@ import {
     FormControl,
     InputLabel
 } from '@mui/material';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
 
 export default function AddTraining({ customerId, firstName, lastName }) {
     const [open, setOpen] = useState(false);
@@ -31,7 +34,9 @@ export default function AddTraining({ customerId, firstName, lastName }) {
     };
 
     const handleChange = (event) => {
-        setTraining({ ...training, [event.target.name]: event.target.value });
+        const { name, value } = event.target;
+        // Store the date as is without converting it immediately
+        setTraining(prev => ({ ...prev, [name]: value }));
     };
 
     useEffect(() => {
@@ -58,8 +63,11 @@ export default function AddTraining({ customerId, firstName, lastName }) {
     };
 
     const addTraining = () => {
+        // Convert date to UTC only when sending the data
+        const formattedDate = dayjs(training.date).utc().format();
         const body = JSON.stringify({
             ...training,
+            date: formattedDate, // use the formatted date here
             customer: `https://customerrestservice-personaltraining.rahtiapp.fi/api/customers/${customerId}`
         });
 
@@ -113,14 +121,14 @@ export default function AddTraining({ customerId, firstName, lastName }) {
                         value={training.duration}
                         onChange={handleChange}
                     />
-                     <FormControl fullWidth required margin="dense" variant="standard">
+                    <FormControl fullWidth required margin="dense" variant="standard">
                         <InputLabel id="activity-label">Activity</InputLabel>
                         <Select
                             labelId="activity-label"
                             name="activity"
                             value={training.activity}
                             onChange={handleChange}
-                            label="Activity" // This helps MUI understand the label is associated with the select
+                            label="Activity"
                         >
                             {activities.map((activity, index) => (
                                 <MenuItem key={index} value={activity}>
