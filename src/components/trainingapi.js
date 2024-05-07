@@ -6,7 +6,7 @@ export const getTraining = async () => {
             const errorDetails = await response.text();
             throw new Error(`Error in fetch: ${response.statusText}, Details: ${errorDetails}`);
         }
-        return await response.json();
+        return response.json();
     } catch (error) {
         console.error("Network error:", error);
         throw error;

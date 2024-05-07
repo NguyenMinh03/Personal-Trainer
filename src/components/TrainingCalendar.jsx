@@ -13,25 +13,37 @@ export default function TrainingCalendar() {
     }, []);
 
     const getTrainings = () => {
-        fetch('https://customerrestservice-personaltraining.rahtiapp.fi/gettrainings', { method: 'GET' })
-            .then(response => response.json())
+        fetch('https://customerrestservice-personaltraining.rahtiapp.fi/gettrainings')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(responseData => {
+                if (!Array.isArray(responseData)) {
+                    throw new Error('Data format is incorrect, expected an array of trainings');
+                }
                 setTrainings(responseData);
             })
             .catch(error => console.error("Fetch Error:", error));
     };
 
     const events = trainings.map(training => {
+        if (!training.customer) {
+            console.error('Customer details are missing in training data');
+            return null; // skipping this entry
+        }
         return {
             title: `${training.activity} / ${training.customer.firstname} ${training.customer.lastname}`,
             start: new Date(training.date),
-            end: new Date(new Date(training.date).getTime() + training.duration * 60000),
+            end: new Date(new Date(training.date).getTime() + (training.duration || 0) * 60000),
             allDay: false 
         };
-    });
+    }).filter(event => event !== null);
 
     return (
-        <div style={{ height: 700 }}>
+        <div style={{width:1500, height: 800 }}>
             <Calendar
                 localizer={localizer}
                 events={events}
