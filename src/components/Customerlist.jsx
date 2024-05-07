@@ -65,7 +65,7 @@ function Customerlist() {
     ];
     const onExportClick = useCallback(() => {
         gridApi.exportDataAsCsv({
-            columnKeys: ['firstname', 'lastname', 'email', 'phone', 'streetaddress', 'postcode', 'city'], // Specify fields to export
+            columnKeys: ['firstname', 'lastname', 'email', 'phone', 'streetaddress', 'postcode', 'city'],
             fileName: 'customers.csv'
         });
     }, [gridApi]);
@@ -125,11 +125,9 @@ useEffect(() => {
         })
           .then((response) => {
             if (response.ok) {
-              // Delete the customer from the local state
               setCustomers((prevCustomers) =>
                 prevCustomers.filter((customer) => customer.id !== id)
               );
-              // Fetch the updated list of customers
               fetchData();
             } else {
               throw new Error("Failed to delete customer");
@@ -158,7 +156,7 @@ useEffect(() => {
             }
             return response.json();
         })
-        .then(fetchCustomers) // Refresh customer list after adding
+        .then(fetchCustomers)
         .catch(err => console.error('Error adding customer:', err));
     }, [fetchCustomers]);
 

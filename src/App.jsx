@@ -1,3 +1,4 @@
+// App.jsx
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import {
@@ -15,7 +16,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import Customerlist from './components/Customerlist';
 import Training from './components/Training';
-
+import TrainingCalendar from './components/TrainingCalendar';
 
 function App() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -66,13 +67,19 @@ function App() {
                                 <ListItemText primary="Trainings" />
                             </ListItemButton>
                         </ListItem>
+                        <ListItem disablePadding>
+                            <ListItemButton component={Link} to="/calendar">
+                                <ListItemText primary="Training Calendar" />
+                            </ListItemButton>
+                        </ListItem>
                     </List>
                 </Box>
             </Drawer>
-            <Box component="main" sx={{ paddingTop: 8, paddingLeft: 3 }}> {/* Adjust padding as necessary */}
+            <Box component="main" sx={{ paddingTop: 8, paddingLeft: 3 }}>
                 <Routes>
                     <Route path="/customers" element={<Customerlist />} />
                     <Route path="/trainings" element={<Training />} />
+                    <Route path="/calendar" element={<TrainingCalendar />} />
                 </Routes>
             </Box>
         </Router>

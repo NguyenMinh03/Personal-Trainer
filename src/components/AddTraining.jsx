@@ -14,7 +14,7 @@ export default function AddTraining({ customerId, firstName, lastName }) {
       date: "",
       duration: "",
       activity: "",
-      customer: `${firstName} ${lastName}` // Now using names instead of a URL
+      customer: `${firstName} ${lastName}` 
     });
 
     const handleClickOpen = () => {

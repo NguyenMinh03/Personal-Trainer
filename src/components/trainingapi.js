@@ -9,6 +9,6 @@ export const getTraining = async () => {
         return await response.json();
     } catch (error) {
         console.error("Network error:", error);
-        throw error; // Rethrow after logging or handle accordingly
+        throw error;
     }
 }
